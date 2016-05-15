@@ -8,7 +8,7 @@ var Surface = React.createClass({
   },
 
   componentDidMount () {
-    var regl = require('regl')(this.refs.canvas );
+    var regl = require('regl')(this.refs.canvas);
     this.setState({
       regl: regl
     });
@@ -18,11 +18,6 @@ var Surface = React.createClass({
     if (!this.state.regl) {
       return;
     }
-
-    // this.state.regl.clear({
-    //   color: [1, 1, 1, 0],
-    //   depth: 1
-    // });
 
     var children = Object.keys(this.refs).filter(k => k !== 'canvas').map(k => this.refs[k]);
     children.forEach((child) => {

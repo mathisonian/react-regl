@@ -8,14 +8,24 @@ var Triangle = React.createClass({
     };
   },
 
+  initialize(regl) {
+    this.setState({
+      regl: regl,
+      renderer: this.getRenderer(regl)
+    });
+  },
+
   componentDidMount () {
     var regl = this.props.getRegl();
     if (!regl) {
       return;
     }
 
-    var renderer = this.getRenderer(regl);
-    this.paint(renderer);
+    if (!this.state.renderer) {
+      this.initialize(regl);
+    }
+
+    this.paint(this.state.renderer);
   },
 
   componentDidUpdate () {
@@ -23,12 +33,11 @@ var Triangle = React.createClass({
     if (!regl) {
       return;
     }
+    if (!this.state.renderer) {
+      this.initialize(regl);
+    }
 
-    var renderer = this.getRenderer(regl);
-    // this.setState({
-    //   renderer: this.getRenderer(regl)
-    // });
-    this.paint(renderer);
+    this.paint(this.state.renderer);
   },
 
   getRenderer (regl) {
@@ -47,12 +56,6 @@ var Triangle = React.createClass({
           gl_Position = vec4(position.x, position.y, 0, 1);
         }
       `,
-      attributes: {
-        position: regl.buffer(this.props.position)
-      },
-      uniforms: {
-        color: regl.prop('color')
-      },
       count: 3
     });
   },
@@ -62,8 +65,17 @@ var Triangle = React.createClass({
       return;
     }
 
-    renderer({
-      color: this.props.color
+    renderer(() => {
+      var scopedRenderer = this.state.regl({
+        attributes: {
+          position: this.state.regl.buffer(this.props.position)
+        },
+        uniforms: {
+          color: this.props.color
+        }
+      });
+
+      scopedRenderer();
     });
   },
 
