@@ -79,9 +79,9 @@ var Triangle = React.createClass({
     });
   },
 
-	render () {
-		return null;
-	}
+  render () {
+    return null;
+  }
 });
 
 export default Triangle;

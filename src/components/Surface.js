@@ -29,7 +29,7 @@ var Surface = React.createClass({
     return this.state.regl;
   },
 
-	render () {
+  render () {
     var regl = this.refs.canvas;
     var children = React.Children.map(this.props.children, (child, i) => {
       return React.cloneElement(child, {
@@ -38,12 +38,12 @@ var Surface = React.createClass({
       });
     }, this);
 
-		return (
-			<canvas ref='canvas' width={this.props.width} height={this.props.height}>
+    return (
+      <canvas ref='canvas' width={this.props.width} height={this.props.height}>
         {children}
       </canvas>
-		);
-	}
+    );
+  }
 });
 
 export default Surface;
