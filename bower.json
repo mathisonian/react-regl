@@ -1,0 +1,29 @@
+{
+  "name": "react-regl",
+  "version": "0.0.0",
+  "description": "React Regl",
+  "main": "dist/react-regl.min.js",
+  "homepage": "https://github.com/mathisonian/react-regl",
+  "authors": [
+    "Matthew Conlen"
+  ],
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "react",
+    "react-component"
+  ],
+  "license": "MIT",
+  "ignore": [
+    ".editorconfig",
+    ".gitignore",
+    "package.json",
+    "src",
+    "node_modules",
+    "example",
+    "test"
+  ]
+}
