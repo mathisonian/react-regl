@@ -96,6 +96,6 @@ To build, watch and serve the examples (which will also watch the component sour
 
 ## License
 
-__PUT LICENSE HERE__
+MIT
 
 Copyright (c) 2016 Matthew Conlen.
