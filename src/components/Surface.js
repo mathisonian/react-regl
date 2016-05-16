@@ -1,9 +1,14 @@
 var React = require('react');
+var TriangleRenderer = require('../renderers/triangle');
+var renderers = {
+  triangle: TriangleRenderer
+};
 
 var Surface = React.createClass({
 
   getInitialState () {
     return {
+      rendererCache: {}
     };
   },
 
@@ -12,6 +17,18 @@ var Surface = React.createClass({
     this.setState({
       regl: regl
     });
+  },
+
+  getRenderer (name) {
+    if (!this.state.regl) {
+      return;
+    }
+
+    if (!this.state.rendererCache[name]) {
+      this.state.rendererCache[name] = renderers[name](this.state.regl);
+    }
+
+    return this.state.rendererCache[name];
   },
 
   componentDidUpdate: function() {
@@ -34,6 +51,7 @@ var Surface = React.createClass({
     var children = React.Children.map(this.props.children, (child, i) => {
       return React.cloneElement(child, {
         getRegl: this.getRegl,
+        getRenderer: this.getRenderer,
         ref: 'child' + i
       });
     }, this);

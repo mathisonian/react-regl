@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var { Surface, Triangle } = require('react-regl');
+var { Surface, Triangle, Rectangle } = require('react-regl');
 var Victory = require('victory');
 
 var App = React.createClass({
@@ -11,26 +11,37 @@ var App = React.createClass({
     }
   },
 
-  componentDidMount () {
+  toggleState () {
     this.setState({
-      x: 2 * Math.PI
+      x: 2 * Math.PI - this.state.x
     })
   },
 
+  componentDidMount () {
+    this.toggleState();
+    setInterval(() => { this.toggleState(); }, 500);
+  },
+
   render () {
+
+    var points = [];
+    for (var i = 0; i < 1000; i ++) {
+      points.push({
+        x: Math.random() * 2 - 1,
+        y: Math.random() * 2 - 1
+      });
+    }
     return (
       <div>
-        <Victory.VictoryAnimation data={{ x: this.state.x }} onEnd={() => { this.setState({x: 2 * Math.PI - this.state.x}); }}>
+        <Surface width={600} height={400}>
           {
-            (tweened) => {
+            points.map((d, i) => {
               return (
-                <Surface width={600} height={400}>
-                  <Triangle position={[[Math.sin(tweened.x), -1], [Math.cos(tweened.x), 1], [1, Math.sin(tweened.x)]]} color={[Math.abs(Math.sin(tweened.x)), Math.cos(1), tweened.x, 1]} />
-                </Surface>
-              )
-            }
+                <Rectangle key={i} x={d.x} y={d.y} width={0.02} height={0.05} color={[Math.random(), Math.random(), Math.random(), 0.5]} />
+              );
+            })
           }
-        </Victory.VictoryAnimation>
+        </Surface>
       </div>
     );
   }
